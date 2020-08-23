@@ -1,0 +1,23 @@
+type Query {
+  hello: String
+}
+
+schema {
+  query: Query
+  # mutation: Mutation
+}
+
+#type Library {
+#  id: String!
+#  name: String!
+#  description: String
+#}
+#
+#type Query {
+#  libraries: [Library!]!
+#}
+
+#schema {
+#  query: Query
+#  # mutation: Mutation
+#}

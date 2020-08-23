@@ -1,0 +1,66 @@
+service: celsus-api-gateway
+
+plugins:
+  - serverless-webpack
+  - serverless-domain-manager
+
+custom:
+  config: ${file(./infra.json)}
+  customDomain:
+    domainName: 'api-celsus.isnan.eu'
+    certificateArn: ${self:custom.config.certificate}
+    hostedZoneId: ${self:custom.config.hostedZone}
+    basePath: 'graphql'
+    stage: ${self:provider.stage}
+    createRoute53Record: true
+    endpointType: edge
+  webpack:
+    webpackConfig: './build/webpack.base.config.js'
+    includeModules:
+      forceExclude:
+        - aws-sdk
+    packager: 'yarn'
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  versionFunctions: false
+  memorySize: 1024
+  region: ${self:custom.config.region}
+  stage: ${self:custom.config.environment}
+  endpointType: EDGE
+  profile: serverless-admin-profile
+  timeout: 30
+  role: ${self:custom.config.lambdaExecutionRoleArn}
+  # >>> Enable Gzip compression on AWS APi Gateway
+  apiGateway:
+    minimumCompressionSize: 1024 # in bytes
+  # <<< Enable Gzip compression on AWS APi Gateway
+
+package:
+  exclude:
+    - .env
+    - .vscode/**
+    - .travis.yml
+    - coverage/**
+    - test/**
+    - scripts/**
+
+functions:
+  graphql:
+    handler: src/handler.graphqlHandler
+    name: celsus-graphql-api-gateway
+    events:
+      - http:
+          path: /
+          method: post
+          cors: true
+          authorizer:
+            arn: ${self:custom.config.userPoolArn}
+
+      - http:
+          path: /
+          method: get
+          cors: true
+          authorizer:
+            arn: ${self:custom.config.userPoolArn}
