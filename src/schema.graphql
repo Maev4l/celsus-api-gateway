@@ -1,23 +1,31 @@
 type Query {
-  hello: String
+  ping: String
+  libraries: [Library]
+}
+
+type Library {
+  id: ID
+  name: String
+  description: String
+  booksCount: Int
+  books: [Book]
+}
+
+type Book {
+  id: ID
+  title: String
+  description: String
+  isbn10: String
+  isbn13: String
+  thumbnail: String
+  authors: [String]
+  tags: [String]
+  bookSet: String
+  bookSetOrder: Int
+  lendingId: ID
 }
 
 schema {
   query: Query
   # mutation: Mutation
 }
-
-#type Library {
-#  id: String!
-#  name: String!
-#  description: String
-#}
-#
-#type Query {
-#  libraries: [Library!]!
-#}
-
-#schema {
-#  query: Query
-#  # mutation: Mutation
-#}

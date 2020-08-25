@@ -30,6 +30,8 @@
   },
   "dependencies": {
     "apollo-server-lambda": "2.16.1",
-    "graphql": "15.3.0"
+    "aws-sdk": "2.738.0",
+    "graphql": "15.3.0",
+    "winston": "3.3.3"
   }
 }

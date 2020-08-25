@@ -6,10 +6,19 @@ import resolvers from './resolvers';
 const server = new ApolloServer({
   typeDefs: schema,
   resolvers,
-  context: (event, context) => ({
-    event,
-    context,
-  }),
+  context: ({ event }) => {
+    const {
+      requestContext: {
+        authorizer: {
+          claims: { sub },
+        },
+      },
+    } = event;
+
+    return {
+      userId: sub,
+    };
+  },
 });
 
 // eslint-disable-next-line import/prefer-default-export
