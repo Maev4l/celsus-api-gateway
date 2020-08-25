@@ -1,19 +1,19 @@
 type Query {
   ping: String
-  libraries: [Library]
+  libraries: [Library]!
 }
 
 type Library {
-  id: ID
-  name: String
+  id: ID!
+  name: String!
   description: String
   booksCount: Int
   books: [Book]
 }
 
 type Book {
-  id: ID
-  title: String
+  id: ID!
+  title: String!
   description: String
   isbn10: String
   isbn13: String
@@ -23,6 +23,7 @@ type Book {
   bookSet: String
   bookSetOrder: Int
   lendingId: ID
+  library: Library
 }
 
 schema {

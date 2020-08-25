@@ -31,11 +31,22 @@ const getLibraries = async (parent, args, context) => {
   return libraries;
 };
 
+const getBooks = async (parent, args, context) => {
+  const { userId } = context;
+  const { id: libraryId } = parent;
+  const { books } = await invokeLambda('get-books', userId, {});
+
+  return books.filter((b) => b.library.id === libraryId);
+};
+
 export default {
   Query: {
     ping: () => {
       return 'Pong';
     },
     libraries: getLibraries,
+  },
+  Library: {
+    books: getBooks,
   },
 };
