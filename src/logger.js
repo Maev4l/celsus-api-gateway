@@ -10,7 +10,7 @@ export default {
           return `${timestamp} [${label}] ${level}: ${message}`;
         }),
       ),
-      transports: [new winston.transports.Console({ level: 'error' })],
+      transports: [new winston.transports.Console({ level: 'info' })],
     };
     const logger = winston.loggers.get(category, options);
     return logger;

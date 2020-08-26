@@ -1,13 +1,24 @@
 type Query {
   ping: String
   libraries: [Library]!
+  library(id: ID!): LibraryDetail
+}
+
+type Mutation {
+  addLibrary(name: String!, description: String!): Library!
 }
 
 type Library {
   id: ID!
   name: String!
   description: String
-  booksCount: Int
+  booksCount: Int!
+}
+
+type LibraryDetail {
+  id: ID!
+  name: String!
+  description: String
   books: [Book]
 }
 
@@ -28,5 +39,5 @@ type Book {
 
 schema {
   query: Query
-  # mutation: Mutation
+  mutation: Mutation
 }

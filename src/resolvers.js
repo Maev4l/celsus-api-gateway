@@ -14,6 +14,7 @@ const invokeLambda = async (functionName, userId, payload) => {
     InvocationType: 'RequestResponse',
     Payload: JSON.stringify({ userId, payload }),
   };
+  // logger.info(`Params sent: ${JSON.stringify(params)}`);
   try {
     const { Payload: result } = await lambda.invoke(params).promise();
     return JSON.parse(result);
@@ -31,12 +32,32 @@ const getLibraries = async (parent, args, context) => {
   return libraries;
 };
 
-const getBooks = async (parent, args, context) => {
+const getLibrary = async (parent, args, context) => {
+  const { id } = args;
+  const { userId } = context;
+  const library = await invokeLambda('get-library', userId, { id });
+  return library;
+};
+
+const getBooksFromLibrary = async (parent, args, context) => {
   const { userId } = context;
   const { id: libraryId } = parent;
-  const { books } = await invokeLambda('get-books', userId, {});
+  const { books } = await invokeLambda('get-books-from-library', userId, { libraryId });
 
-  return books.filter((b) => b.library.id === libraryId);
+  return books;
+};
+
+const createLibrary = async (parent, args, context) => {
+  const { userId } = context;
+  const { name, description } = args;
+  const { id } = await invokeLambda('post-library', userId, { library: { name, description } });
+  logger.error(`New Library id: ${id}`);
+  return {
+    id,
+    name,
+    description,
+    booksCount: 0,
+  };
 };
 
 export default {
@@ -45,8 +66,12 @@ export default {
       return 'Pong';
     },
     libraries: getLibraries,
+    library: getLibrary,
   },
-  Library: {
-    books: getBooks,
+  Mutation: {
+    addLibrary: createLibrary,
+  },
+  LibraryDetail: {
+    books: getBooksFromLibrary,
   },
 };
