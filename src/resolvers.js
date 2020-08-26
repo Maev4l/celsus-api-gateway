@@ -51,13 +51,19 @@ const createLibrary = async (parent, args, context) => {
   const { userId } = context;
   const { name, description } = args;
   const { id } = await invokeLambda('post-library', userId, { library: { name, description } });
-  logger.error(`New Library id: ${id}`);
   return {
     id,
     name,
     description,
     booksCount: 0,
   };
+};
+
+const modifyLibrary = async (parent, args, context) => {
+  const { userId } = context;
+  const { library } = args;
+  const result = await invokeLambda('post-library', userId, { library });
+  return result;
 };
 
 export default {
@@ -70,6 +76,7 @@ export default {
   },
   Mutation: {
     addLibrary: createLibrary,
+    updateLibrary: modifyLibrary,
   },
   LibraryDetail: {
     books: getBooksFromLibrary,

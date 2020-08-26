@@ -6,6 +6,7 @@ type Query {
 
 type Mutation {
   addLibrary(name: String!, description: String!): Library!
+  updateLibrary(library: LibraryInput!): Boolean
 }
 
 type Library {
@@ -13,6 +14,12 @@ type Library {
   name: String!
   description: String
   booksCount: Int!
+}
+
+input LibraryInput {
+  id: ID!
+  name: String
+  description: String
 }
 
 type LibraryDetail {
