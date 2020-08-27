@@ -66,6 +66,13 @@ const modifyLibrary = async (parent, args, context) => {
   return result;
 };
 
+const deleteLibrary = async (parent, args, context) => {
+  const { userId } = context;
+  const { id } = args;
+  const result = await invokeLambda('delete-library', userId, { id });
+  return result;
+};
+
 export default {
   Query: {
     ping: () => {
@@ -77,6 +84,7 @@ export default {
   Mutation: {
     addLibrary: createLibrary,
     updateLibrary: modifyLibrary,
+    removeLibrary: deleteLibrary,
   },
   LibraryDetail: {
     books: getBooksFromLibrary,

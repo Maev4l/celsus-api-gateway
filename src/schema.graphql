@@ -7,6 +7,7 @@ type Query {
 type Mutation {
   addLibrary(name: String!, description: String!): Library!
   updateLibrary(library: LibraryInput!): Boolean
+  removeLibrary(id: ID!): Boolean
 }
 
 type Library {
