@@ -3,7 +3,10 @@ import { ApolloError } from 'apollo-server-lambda';
 
 import loggerFactory from './logger';
 
-AWS.config.region = 'eu-central-1';
+const {
+  env: { REGION: region },
+} = process;
+AWS.config.update({ region });
 
 const lambda = new AWS.Lambda();
 const logger = loggerFactory.getLogger('resolvers');

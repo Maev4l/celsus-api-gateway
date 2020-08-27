@@ -9,9 +9,6 @@ const infra = process.env.BUILD_MODE === 'CI' ? {} : require('../infra.json');
 
 const definePluginConfig = new webpack.DefinePlugin({
   'process.env': {
-    CORE_QUEUE_URL: JSON.stringify(infra.coreQueueUrl),
-    CONTACTS_QUEUE_URL: JSON.stringify(infra.contactsQueueUrl),
-    LENDINGS_QUEUE_URL: JSON.stringify(infra.lendingsQueueUrl),
     REGION: JSON.stringify(infra.region),
   },
 });
