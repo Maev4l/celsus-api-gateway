@@ -8,6 +8,19 @@ type Mutation {
   addLibrary(name: String!, description: String!): Library!
   updateLibrary(library: LibraryInput!): Boolean
   removeLibrary(id: ID!): Boolean
+  addBook(
+    title: String!
+    libraryId: ID!
+    description: String = ""
+    isbn10: String = ""
+    isbn13: String = ""
+    thumbnail: String = ""
+    authors: [String] = []
+    tags: [String] = []
+    bookSet: String = ""
+    bookSetOrder: Int = 0
+    language: String = "fr"
+  ): Book!
 }
 
 type Library {
@@ -42,7 +55,7 @@ type Book {
   bookSet: String
   bookSetOrder: Int
   lendingId: ID
-  library: Library
+  library: Library!
 }
 
 schema {

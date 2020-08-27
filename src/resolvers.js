@@ -17,7 +17,7 @@ const invokeLambda = async (functionName, userId, payload) => {
     InvocationType: 'RequestResponse',
     Payload: JSON.stringify({ userId, payload }),
   };
-  // logger.info(`Params sent: ${JSON.stringify(params)}`);
+  logger.error(`Params sent: ${JSON.stringify(params)}`);
   try {
     const { Payload: result } = await lambda.invoke(params).promise();
     return JSON.parse(result);
@@ -27,7 +27,7 @@ const invokeLambda = async (functionName, userId, payload) => {
   }
 };
 
-const getLibraries = async (parent, args, context) => {
+const getLibraries = async (_, __, context) => {
   const { userId } = context;
 
   const { libraries } = await invokeLambda('get-libraries', userId);
@@ -35,14 +35,14 @@ const getLibraries = async (parent, args, context) => {
   return libraries;
 };
 
-const getLibrary = async (parent, args, context) => {
+const getLibrary = async (_, args, context) => {
   const { id } = args;
   const { userId } = context;
   const library = await invokeLambda('get-library', userId, { id });
   return library;
 };
 
-const getBooksFromLibrary = async (parent, args, context) => {
+const getBooksFromLibrary = async (parent, _, context) => {
   const { userId } = context;
   const { id: libraryId } = parent;
   const { books } = await invokeLambda('get-books-from-library', userId, { libraryId });
@@ -50,7 +50,15 @@ const getBooksFromLibrary = async (parent, args, context) => {
   return books;
 };
 
-const createLibrary = async (parent, args, context) => {
+const getLibraryForBook = async (parent, _, context) => {
+  const { userId } = context;
+  const { libraryId: id } = parent;
+  logger.info(`Parent: ${JSON.stringify(parent)}`);
+  const library = await invokeLambda('get-library', userId, { id });
+  return library;
+};
+
+const createLibrary = async (_, args, context) => {
   const { userId } = context;
   const { name, description } = args;
   const { id } = await invokeLambda('post-library', userId, { library: { name, description } });
@@ -62,18 +70,64 @@ const createLibrary = async (parent, args, context) => {
   };
 };
 
-const modifyLibrary = async (parent, args, context) => {
+const modifyLibrary = async (_, args, context) => {
   const { userId } = context;
   const { library } = args;
   const result = await invokeLambda('post-library', userId, { library });
   return result;
 };
 
-const deleteLibrary = async (parent, args, context) => {
+const deleteLibrary = async (_, args, context) => {
   const { userId } = context;
   const { id } = args;
   const result = await invokeLambda('delete-library', userId, { id });
   return result;
+};
+
+const createBook = async (_, args, context) => {
+  const { userId } = context;
+  const {
+    title,
+    description,
+    isbn10,
+    isbn13,
+    thumbnail,
+    authors,
+    tags,
+    bookSet,
+    bookSetOrder,
+    libraryId,
+    language,
+  } = args;
+  const { id } = await invokeLambda('post-book', userId, {
+    book: {
+      title,
+      description,
+      isbn10,
+      isbn13,
+      thumbnail,
+      authors,
+      tags,
+      bookSet,
+      bookSetOrder,
+      libraryId,
+      language,
+    },
+  });
+
+  return {
+    id,
+    title,
+    description,
+    isbn10,
+    isbn13,
+    thumbnail,
+    authors,
+    tags,
+    bookSet,
+    bookSetOrder,
+    libraryId,
+  };
 };
 
 export default {
@@ -88,8 +142,12 @@ export default {
     addLibrary: createLibrary,
     updateLibrary: modifyLibrary,
     removeLibrary: deleteLibrary,
+    addBook: createBook,
   },
   LibraryDetail: {
     books: getBooksFromLibrary,
+  },
+  Book: {
+    library: getLibraryForBook,
   },
 };
