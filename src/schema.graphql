@@ -1,7 +1,7 @@
 type Query {
   ping: String
   libraries: [Library]!
-  library(id: ID!): LibraryDetail
+  library(id: ID!, page: Int! = 1): LibraryDetail
   searchBooks(searchQuery: SearchBooksQuery!): PaginatedBooksList
 }
 
@@ -54,7 +54,7 @@ type LibraryDetail {
   id: ID!
   name: String!
   description: String
-  books: [Book]
+  content: PaginatedBooksList
 }
 
 input BookInput {

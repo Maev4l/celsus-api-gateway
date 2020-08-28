@@ -38,10 +38,11 @@ const getLibrary = async (_, { id }, { userId }) => {
   return library;
 };
 
-const getBooksFromLibrary = async ({ id: libraryId }, _, { userId }) => {
-  const { books } = await invokeLambda('get-books-from-library', userId, { libraryId });
-
-  return books;
+const getBooksFromLibrary = async (parent, _, { userId }, { variableValues }) => {
+  const { id: libraryId } = parent;
+  const { page } = variableValues;
+  const result = await invokeLambda('get-books-from-library', userId, { libraryId, page });
+  return result;
 };
 
 const getLibraryForBook = async ({ libraryId: id }, _, { userId }) => {
@@ -149,7 +150,7 @@ export default {
     removeBook: deleteBook,
   },
   LibraryDetail: {
-    books: getBooksFromLibrary,
+    content: getBooksFromLibrary,
   },
   Book: {
     library: getLibraryForBook,
