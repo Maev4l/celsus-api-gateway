@@ -2,6 +2,7 @@ type Query {
   ping: String
   libraries: [Library]!
   library(id: ID!): LibraryDetail
+  searchBooks(searchQuery: SearchBooksQuery!): PaginatedBooksList
 }
 
 type Mutation {
@@ -23,6 +24,17 @@ type Mutation {
   ): Book!
   updateBook(book: BookInput!): Boolean
   removeBook(id: ID!): Boolean
+}
+
+input SearchBooksQuery {
+  page: Int! @constraint(min: 1)
+  keywords: [String!]!
+}
+
+type PaginatedBooksList {
+  total: Int!
+  itemsPerPage: Int!
+  books: [Book]!
 }
 
 type Library {
