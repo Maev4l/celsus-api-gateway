@@ -138,6 +138,13 @@ const modifyBook = async (_, args, context) => {
   return result;
 };
 
+const deleteBook = async (_, args, context) => {
+  const { userId } = context;
+  const { id } = args;
+  const result = await invokeLambda('delete-book', userId, { id });
+  return result;
+};
+
 export default {
   Query: {
     ping: () => {
@@ -152,6 +159,7 @@ export default {
     removeLibrary: deleteLibrary,
     addBook: createBook,
     updateBook: modifyBook,
+    removeBook: deleteBook,
   },
   LibraryDetail: {
     books: getBooksFromLibrary,
