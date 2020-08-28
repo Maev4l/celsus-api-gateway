@@ -21,6 +21,7 @@ type Mutation {
     bookSetOrder: Int = 0
     language: String = "fr"
   ): Book!
+  updateBook(book: BookInput!): Boolean
 }
 
 type Library {
@@ -32,7 +33,7 @@ type Library {
 
 input LibraryInput {
   id: ID!
-  name: String
+  name: String!
   description: String
 }
 
@@ -41,6 +42,21 @@ type LibraryDetail {
   name: String!
   description: String
   books: [Book]
+}
+
+input BookInput {
+  id: ID!
+  title: String!
+  description: String = ""
+  isbn10: String = ""
+  isbn13: String = ""
+  thumbnail: String = ""
+  authors: [String] = []
+  tags: [String] = []
+  bookSet: String = ""
+  bookSetOrder: Int = 0
+  language: String = "fr"
+  libraryId: ID
 }
 
 type Book {
@@ -54,6 +70,7 @@ type Book {
   tags: [String]
   bookSet: String
   bookSetOrder: Int
+  language: String
   lendingId: ID
   library: Library!
 }
