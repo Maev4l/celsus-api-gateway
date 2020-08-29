@@ -109,6 +109,18 @@ const getContact = async (_, { id }, { userId }) => {
   return contact;
 };
 
+const createContact = async (_, { contact }, { userId }) => {
+  const { id } = await invokeLambda('post-contact', userId, { contact });
+
+  return { id, ...contact };
+};
+
+const modifyContact = async (_, { contact }, { userId }) => {
+  const result = await invokeLambda('post-contact', userId, { contact });
+
+  return result;
+};
+
 export default {
   Query: {
     ping: () => {
@@ -127,6 +139,8 @@ export default {
     addBook: createBook,
     updateBook: modifyBook,
     removeBook: deleteBook,
+    addContact: createContact,
+    updateContact: modifyContact,
   },
   LibraryDetail: {
     content: getBooksFromLibrary,

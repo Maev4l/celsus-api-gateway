@@ -14,6 +14,8 @@ type Mutation {
   addBook(book: BookInput!): Book!
   updateBook(book: BookInput!): Boolean
   removeBook(id: ID!): Boolean
+  addContact(contact: ContactInput!): Contact!
+  updateContact(contact: ContactInput!): Boolean
 }
 
 input SearchBooksQuery {
@@ -84,7 +86,7 @@ type Contact {
   thumbnail: String
 }
 
-type ContactInput {
+input ContactInput {
   id: ID
   nickname: String!
   thumbnail: String
