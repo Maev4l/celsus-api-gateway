@@ -132,6 +132,18 @@ const searchBooks = async (_, { searchQuery }, { userId }) => {
   return result;
 };
 
+const getContacts = async (_, __, { userId }) => {
+  const { contacts } = await invokeLambda('get-contacts', userId);
+
+  return contacts;
+};
+
+const getContact = async (_, { id }, { userId }) => {
+  const contact = await invokeLambda('get-contact', userId, { id });
+
+  return contact;
+};
+
 export default {
   Query: {
     ping: () => {
@@ -140,6 +152,8 @@ export default {
     libraries: getLibraries,
     library: getLibrary,
     searchBooks,
+    contacts: getContacts,
+    contact: getContact,
   },
   Mutation: {
     addLibrary: createLibrary,

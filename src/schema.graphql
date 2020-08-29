@@ -3,6 +3,8 @@ type Query {
   libraries: [Library]!
   library(id: ID!, page: Int! = 1): LibraryDetail
   searchBooks(searchQuery: SearchBooksQuery!): PaginatedBooksList
+  contacts: [Contact]!
+  contact(id: ID!): Contact
 }
 
 type Mutation {
@@ -88,7 +90,8 @@ type Book {
   library: Library!
 }
 
-schema {
-  query: Query
-  mutation: Mutation
+type Contact {
+  id: ID!
+  nickname: String!
+  thumbnail: String
 }
