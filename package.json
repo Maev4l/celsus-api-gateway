@@ -7,7 +7,9 @@
   "scripts": {
     "download-infra:dev": "aws s3 cp s3://celsus-tf-state/celsus/dev/infra.json infra.json",
     "deploy:dev": "yarn download-infra:dev && npx sls deploy",
-    "undeploy:dev": "npx sls remove"
+    "undeploy:dev": "npx sls remove",
+    "build":"yarn download-infra:dev && npx sls webpack",
+    "build:ci": "BUILD_MODE=CI npx sls webpack"
   },
   "devDependencies": {
     "@babel/core": "7.11.4",

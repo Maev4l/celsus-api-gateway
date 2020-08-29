@@ -1,0 +1,8 @@
+language: node_js
+node_js:
+  - lts/*
+notifications:
+  email: false # Disable all mail notifications
+script:
+  - npm run build:ci
+#after_script: npm run coverage

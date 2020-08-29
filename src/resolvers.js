@@ -17,7 +17,7 @@ const invokeLambda = async (functionName, userId, payload) => {
     InvocationType: 'RequestResponse',
     Payload: JSON.stringify({ userId, payload }),
   };
-  logger.error(`Params sent: ${JSON.stringify(params)}`);
+  logger.debug(`Params sent: ${JSON.stringify(params)}`);
   try {
     const { Payload: result } = await lambda.invoke(params).promise();
     return JSON.parse(result);
@@ -93,7 +93,6 @@ const deleteBook = async (_, { id }, { userId }) => {
 const searchBooks = async (_, { searchQuery }, { userId }) => {
   const { page, keywords } = searchQuery;
   const result = await invokeLambda('search-books', userId, { page, keywords });
-  logger.error(`Search result: ${JSON.stringify(result)}`);
   return result;
 };
 
@@ -121,6 +120,11 @@ const modifyContact = async (_, { contact }, { userId }) => {
   return result;
 };
 
+const deleteContact = async (_, { id }, { userId }) => {
+  const result = await invokeLambda('delete-contact', userId, { id });
+  return result;
+};
+
 export default {
   Query: {
     ping: () => {
@@ -141,6 +145,7 @@ export default {
     removeBook: deleteBook,
     addContact: createContact,
     updateContact: modifyContact,
+    removeContact: deleteContact,
   },
   LibraryDetail: {
     content: getBooksFromLibrary,

@@ -16,6 +16,7 @@ type Mutation {
   removeBook(id: ID!): Boolean
   addContact(contact: ContactInput!): Contact!
   updateContact(contact: ContactInput!): Boolean
+  removeContact(id: ID!): Boolean
 }
 
 input SearchBooksQuery {
