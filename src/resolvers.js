@@ -50,13 +50,11 @@ const getLibraryForBook = async ({ libraryId: id }, _, { userId }) => {
   return library;
 };
 
-const createLibrary = async (_, { name, description }, { userId }) => {
-  const { id } = await invokeLambda('post-library', userId, { library: { name, description } });
+const createLibrary = async (_, { library }, { userId }) => {
+  const { id } = await invokeLambda('post-library', userId, { library });
   return {
     id,
-    name,
-    description,
-    booksCount: 0,
+    ...library,
   };
 };
 
@@ -71,47 +69,14 @@ const deleteLibrary = async (_, { id }, { userId }) => {
 };
 
 const createBook = async (_, args, { userId }) => {
-  const {
-    title,
-    description,
-    isbn10,
-    isbn13,
-    thumbnail,
-    authors,
-    tags,
-    bookSet,
-    bookSetOrder,
-    libraryId,
-    language,
-  } = args;
+  const { book } = args;
   const { id } = await invokeLambda('post-book', userId, {
-    book: {
-      title,
-      description,
-      isbn10,
-      isbn13,
-      thumbnail,
-      authors,
-      tags,
-      bookSet,
-      bookSetOrder,
-      libraryId,
-      language,
-    },
+    book,
   });
 
   return {
     id,
-    title,
-    description,
-    isbn10,
-    isbn13,
-    thumbnail,
-    authors,
-    tags,
-    bookSet,
-    bookSetOrder,
-    libraryId,
+    ...book,
   };
 };
 

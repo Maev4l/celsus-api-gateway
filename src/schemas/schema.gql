@@ -8,22 +8,10 @@ type Query {
 }
 
 type Mutation {
-  addLibrary(name: String!, description: String!): Library!
+  addLibrary(library: LibraryInput!): Library!
   updateLibrary(library: LibraryInput!): Boolean
   removeLibrary(id: ID!): Boolean
-  addBook(
-    title: String!
-    libraryId: ID!
-    description: String = ""
-    isbn10: String = ""
-    isbn13: String = ""
-    thumbnail: String = ""
-    authors: [String] = []
-    tags: [String] = []
-    bookSet: String = ""
-    bookSetOrder: Int = 0
-    language: String = "fr"
-  ): Book!
+  addBook(book: BookInput!): Book!
   updateBook(book: BookInput!): Boolean
   removeBook(id: ID!): Boolean
 }
@@ -47,7 +35,7 @@ type Library {
 }
 
 input LibraryInput {
-  id: ID!
+  id: ID
   name: String!
   description: String
 }
@@ -60,7 +48,7 @@ type LibraryDetail {
 }
 
 input BookInput {
-  id: ID!
+  id: ID
   title: String!
   description: String = ""
   isbn10: String = ""
@@ -92,6 +80,12 @@ type Book {
 
 type Contact {
   id: ID!
+  nickname: String!
+  thumbnail: String
+}
+
+type ContactInput {
+  id: ID
   nickname: String!
   thumbnail: String
 }

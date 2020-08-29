@@ -1,7 +1,7 @@
 import { constraintDirective, constraintDirectiveTypeDefs } from 'graphql-constraint-directive';
 import { ApolloServer } from 'apollo-server-lambda';
 
-import schema from './schema.graphql';
+import schema from './schemas/schema.gql';
 import resolvers from './resolvers';
 
 const server = new ApolloServer({
