@@ -1,5 +1,6 @@
 import AWS from 'aws-sdk';
 import { ApolloError } from 'apollo-server-lambda';
+import { DateResolver } from 'graphql-scalars';
 
 import loggerFactory from './logger';
 
@@ -125,7 +126,25 @@ const deleteContact = async (_, { id }, { userId }) => {
   return result;
 };
 
+const getLendings = async (_, { page }, { userId }) => {
+  const { itemsPerPage, total, lendings } = await invokeLambda('get-lendings', userId, { page });
+  const result = {
+    itemsPerPage,
+    total,
+    lendings: lendings.map(
+      ({ contactId: borrowerId, nickname: borrowerNickname, title: bookTitle, ...rest }) => ({
+        borrowerId,
+        borrowerNickname,
+        bookTitle,
+        ...rest,
+      }),
+    ),
+  };
+  return result;
+};
+
 export default {
+  Date: DateResolver,
   Query: {
     ping: () => {
       return 'Pong';
@@ -135,6 +154,7 @@ export default {
     searchBooks,
     contacts: getContacts,
     contact: getContact,
+    lendings: getLendings,
   },
   Mutation: {
     addLibrary: createLibrary,

@@ -1,10 +1,13 @@
+scalar Date
+
 type Query {
   ping: String
   libraries: [Library]!
   library(id: ID!, page: Int! = 1): LibraryDetail
-  searchBooks(searchQuery: SearchBooksQuery!): PaginatedBooksList
+  searchBooks(searchQuery: SearchBooksQuery!): PaginatedBooksList!
   contacts: [Contact]!
   contact(id: ID!): Contact
+  lendings(page: Int! = 1): PaginatedLendingsList!
 }
 
 type Mutation {
@@ -91,4 +94,21 @@ input ContactInput {
   id: ID
   nickname: String!
   thumbnail: String
+}
+
+type PaginatedLendingsList {
+  total: Int!
+  itemsPerPage: Int!
+  lendings: [Lending]!
+}
+
+type Lending {
+  id: ID!
+  bookId: ID!
+  bookTitle: String!
+  borrowerId: ID!
+  borrowerNickname: String!
+  status: String!
+  lentAt: Date!
+  returnedAt: Date
 }

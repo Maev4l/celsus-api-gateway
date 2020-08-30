@@ -8,7 +8,7 @@
     "download-infra:dev": "aws s3 cp s3://celsus-tf-state/celsus/dev/infra.json infra.json",
     "deploy:dev": "yarn download-infra:dev && npx sls deploy",
     "undeploy:dev": "npx sls remove",
-    "build":"yarn download-infra:dev && npx sls webpack",
+    "build": "yarn download-infra:dev && npx sls webpack",
     "build:ci": "BUILD_MODE=CI npx sls webpack"
   },
   "devDependencies": {
@@ -36,6 +36,7 @@
     "aws-sdk": "2.738.0",
     "graphql": "15.3.0",
     "graphql-constraint-directive": "2.1.0",
+    "graphql-scalars": "1.2.6",
     "winston": "3.3.3"
   }
 }
