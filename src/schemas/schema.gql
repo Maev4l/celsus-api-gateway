@@ -20,6 +20,14 @@ type Mutation {
   addContact(contact: ContactInput!): Contact!
   updateContact(contact: ContactInput!): Boolean
   removeContact(id: ID!): Boolean
+  resizeImage(image: Image!): String
+}
+
+input Image {
+  width: Int!
+  height: Int!
+  image: String @constraint(format: "byte")
+  imageUrl: String @constraint(format: "uri")
 }
 
 input SearchBooksQuery {

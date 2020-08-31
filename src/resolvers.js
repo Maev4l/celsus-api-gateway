@@ -143,6 +143,14 @@ const getLendings = async (_, { page }, { userId }) => {
   return result;
 };
 
+const resizeImage = async (_, { image }) => {
+  logger.error(`===> Input: ${JSON.stringify({ format: 'png', ...image })}`);
+  const result = await invokeLambda('resize-image', null, { format: 'png', ...image });
+  logger.error(`===> Result: ${JSON.stringify(result)}`);
+  const { resizedImage } = result;
+  return resizedImage;
+};
+
 export default {
   Date: DateResolver,
   Query: {
@@ -166,6 +174,7 @@ export default {
     addContact: createContact,
     updateContact: modifyContact,
     removeContact: deleteContact,
+    resizeImage,
   },
   LibraryDetail: {
     content: getBooksFromLibrary,

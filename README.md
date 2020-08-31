@@ -1,1 +1,1 @@
-# Celcus GraphQL API
+# Celsus GraphQL API
