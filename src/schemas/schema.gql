@@ -3,7 +3,7 @@ scalar Date
 type Query {
   ping: String
   libraries: [Library]!
-  library(id: ID!, page: Int! = 1): LibraryDetail
+  library(id: ID!, page: Int = 1): LibraryDetail
   searchBooks(searchQuery: SearchBooksQuery!): PaginatedBooksList!
   contacts: [Contact]!
   contact(id: ID!): Contact
