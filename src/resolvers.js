@@ -41,8 +41,13 @@ const getLibrary = async (_, { id }, { userId }) => {
 
 const getBooksFromLibrary = async (parent, _, { userId }, { variableValues }) => {
   const { id: libraryId } = parent;
-  const { page } = variableValues;
-  const result = await invokeLambda('get-books-from-library', userId, { libraryId, page });
+  const { page, pageSize } = variableValues;
+
+  const result = await invokeLambda('get-books-from-library', userId, {
+    libraryId,
+    page,
+    pageSize,
+  });
   return result;
 };
 
@@ -92,8 +97,8 @@ const deleteBook = async (_, { id }, { userId }) => {
 };
 
 const searchBooks = async (_, { searchQuery }, { userId }) => {
-  const { page, keywords } = searchQuery;
-  const result = await invokeLambda('search-books', userId, { page, keywords });
+  const { page, pageSize, keywords } = searchQuery;
+  const result = await invokeLambda('search-books', userId, { page, keywords, pageSize });
   return result;
 };
 
