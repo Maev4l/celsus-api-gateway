@@ -75,7 +75,7 @@ input BookInput {
   bookSet: String = ""
   bookSetOrder: Int = 0
   language: String = "fr"
-  libraryId: ID
+  libraryId: ID!
 }
 
 type Book {
