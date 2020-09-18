@@ -4,6 +4,7 @@ type Query {
   ping: String
   libraries: [Library]!
   library(id: ID!, page: Int = 1, pageSize: Int = 50): LibraryDetail
+  book(id: ID!): Book
   searchBooks(searchQuery: SearchBooksQuery!): PaginatedBooksList!
   contacts: [Contact]!
   contact(id: ID!): Contact

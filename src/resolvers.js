@@ -96,6 +96,12 @@ const deleteBook = async (_, { id }, { userId }) => {
   return result;
 };
 
+const getBook = async (_, { id }, { userId }) => {
+  const result = await invokeLambda('get-book', userId, { id });
+  if (!result) throw new ApolloError(`Unknown book id: ${id} - user: ${userId}`);
+  return result;
+};
+
 const searchBooks = async (_, { searchQuery }, { userId }) => {
   const { page, pageSize, keywords } = searchQuery;
   const result = await invokeLambda('search-books', userId, { page, keywords, pageSize });
@@ -164,6 +170,7 @@ export default {
     },
     libraries: getLibraries,
     library: getLibrary,
+    book: getBook,
     searchBooks,
     contacts: getContacts,
     contact: getContact,
