@@ -8,7 +8,7 @@ const server = new ApolloServer({
   typeDefs: [constraintDirectiveTypeDefs, schema],
   schemaTransforms: [constraintDirective()],
   resolvers,
-  context: ({ event }) => {
+  context: ({ event, context }) => {
     const {
       requestContext: {
         authorizer: {
@@ -17,7 +17,10 @@ const server = new ApolloServer({
       },
     } = event;
 
+    const { functionName } = context;
+
     return {
+      functionName,
       userId: sub,
     };
   },

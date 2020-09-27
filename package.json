@@ -1,5 +1,5 @@
 {
-  "name": "celsus-api",
+  "name": "celsus-api-gateway",
   "version": "1.0.0",
   "description": "",
   "author": "",
@@ -23,8 +23,8 @@
     "eslint-plugin-import": "2.22.0",
     "graphql-tag": "2.11.0",
     "prettier": "2.0.5",
-    "serverless": "1.79.0",
-    "serverless-domain-manager": "4.2.0",
+    "serverless": "2.3.0",
+    "serverless-domain-manager": "5.0.0",
     "serverless-webpack": "5.3.3",
     "webpack": "4.44.1",
     "webpack-cli": "3.3.12",
@@ -32,7 +32,7 @@
     "webpack-node-externals": "2.5.1"
   },
   "dependencies": {
-    "apollo-server-lambda": "2.16.1",
+    "apollo-server-lambda": "2.18.1",
     "aws-sdk": "2.738.0",
     "graphql": "15.3.0",
     "graphql-constraint-directive": "2.1.0",

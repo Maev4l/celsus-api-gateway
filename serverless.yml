@@ -13,6 +13,7 @@ custom:
     basePath: 'graphql'
     stage: ${self:provider.stage}
     createRoute53Record: true
+    autoDomain: true
     endpointType: edge
   webpack:
     webpackConfig: './build/webpack.base.config.js'
