@@ -155,9 +155,7 @@ const getLendings = async (_, { page }, { userId }) => {
 };
 
 const resizeImage = async (_, { image }) => {
-  logger.error(`===> Input: ${JSON.stringify({ format: 'png', ...image })}`);
   const result = await invokeLambda('resize-image', null, { format: 'png', ...image });
-  logger.error(`===> Result: ${JSON.stringify(result)}`);
   const { resizedImage } = result;
   return resizedImage;
 };
