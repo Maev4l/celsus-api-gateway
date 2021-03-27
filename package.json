@@ -5,7 +5,7 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "download-infra:dev": "aws s3 cp s3://celsus-tf-state/celsus/dev/infra.json infra.json",
+    "download-infra:dev": "aws s3 cp s3://global-tf-states/celsus/dev/infra.json infra.json",
     "deploy:dev": "yarn download-infra:dev && npx sls deploy",
     "undeploy:dev": "npx sls remove",
     "build": "yarn download-infra:dev && npx sls webpack",

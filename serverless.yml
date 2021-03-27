@@ -37,6 +37,17 @@ provider:
   apiGateway:
     minimumCompressionSize: 1024 # in bytes
   # <<< Enable Gzip compression on AWS APi Gateway
+  tags:
+    application: 'celsus'
+    owner: 'serverless'
+  stackTags:
+    application: 'celsus'
+    owner: 'serverless'
+  deploymentBucket:
+    blockPublicAccess: true
+    tags:
+      application: 'celsus'
+      owner: 'serverless'
 
 package:
   exclude:
