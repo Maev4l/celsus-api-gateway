@@ -60,7 +60,7 @@ type LibraryDetail {
   id: ID!
   name: String!
   description: String
-  content: PaginatedBooksList
+  books: PaginatedBooksList
 }
 
 input BookInput {
@@ -121,4 +121,9 @@ type Lending {
   status: String!
   lentAt: Date!
   returnedAt: Date
+}
+
+type Bookset {
+  name: String!
+  books: [Book]!
 }

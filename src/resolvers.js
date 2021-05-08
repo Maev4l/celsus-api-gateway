@@ -187,7 +187,7 @@ export default {
     resizeImage,
   },
   LibraryDetail: {
-    content: getBooksFromLibrary,
+    books: getBooksFromLibrary,
   },
   Book: {
     library: getLibraryForBook,
