@@ -32,8 +32,8 @@
     "webpack-node-externals": "2.5.1"
   },
   "dependencies": {
+    "@aws-sdk/client-lambda": "3.10.0",
     "apollo-server-lambda": "2.18.1",
-    "aws-sdk": "2.738.0",
     "graphql": "15.3.0",
     "graphql-constraint-directive": "2.1.0",
     "graphql-scalars": "1.2.6",

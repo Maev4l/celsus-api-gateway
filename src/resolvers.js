@@ -1,16 +1,13 @@
-import AWS from 'aws-sdk';
+import { LambdaClient, InvokeCommand } from '@aws-sdk/client-lambda';
 import { ApolloError } from 'apollo-server-lambda';
 import { DateResolver } from 'graphql-scalars';
 
 import loggerFactory from './logger';
+import { region } from '../infra.json';
 
-const {
-  env: { REGION: region },
-} = process;
-AWS.config.update({ region });
-
-const lambda = new AWS.Lambda();
 const logger = loggerFactory.getLogger('resolvers');
+
+const lambda = new LambdaClient({ region });
 
 const invokeLambda = async (functionName, userId, payload) => {
   const params = {
@@ -20,8 +17,8 @@ const invokeLambda = async (functionName, userId, payload) => {
   };
   logger.debug(`Params sent: ${JSON.stringify(params)}`);
   try {
-    const { Payload: result } = await lambda.invoke(params).promise();
-    return JSON.parse(result);
+    const { Payload: result } = await lambda.send(new InvokeCommand(params));
+    return JSON.parse(new TextDecoder('utf-8').decode(result));
   } catch (e) {
     logger.error(`Failed to invoke function '${functionName}': ${e.message}`);
     throw new ApolloError(e.message);
