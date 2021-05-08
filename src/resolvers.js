@@ -3,8 +3,9 @@ import { ApolloError } from 'apollo-server-lambda';
 import { DateResolver } from 'graphql-scalars';
 
 import loggerFactory from './logger';
-import { region } from '../infra.json';
+import infra from '../infra.json';
 
+const { region } = infra;
 const logger = loggerFactory.getLogger('resolvers');
 
 const lambda = new LambdaClient({ region });
@@ -160,9 +161,7 @@ const resizeImage = async (_, { image }) => {
 export default {
   Date: DateResolver,
   Query: {
-    ping: () => {
-      return 'Pong';
-    },
+    ping: () => 'Pong',
     libraries: getLibraries,
     library: getLibrary,
     book: getBook,
