@@ -61,6 +61,7 @@ type LibraryDetail {
   name: String!
   description: String
   books: PaginatedBooksList
+  bookSets: [Bookset]
 }
 
 input BookInput {
