@@ -3,9 +3,8 @@ import { ApolloError } from 'apollo-server-lambda';
 import { DateResolver } from 'graphql-scalars';
 
 import loggerFactory from './logger';
-import infra from '../infra.json';
 
-const { region } = infra;
+const { region } = INFRA;
 const logger = loggerFactory.getLogger('resolvers');
 
 const lambda = new LambdaClient({ region });
