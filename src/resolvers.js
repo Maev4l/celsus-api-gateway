@@ -4,7 +4,8 @@ import { DateResolver } from 'graphql-scalars';
 
 import loggerFactory from './logger';
 
-const { region } = INFRA;
+const region = process.env.REGION;
+
 const logger = loggerFactory.getLogger('resolvers');
 
 const lambda = new LambdaClient({ region });

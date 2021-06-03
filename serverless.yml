@@ -48,6 +48,8 @@ provider:
     tags:
       application: 'celsus'
       owner: 'serverless'
+  environment:
+    REGION: ${self:custom.config.region}
 
 package:
   exclude:

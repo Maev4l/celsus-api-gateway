@@ -9,7 +9,7 @@
     "deploy:dev": "yarn download-infra:dev && npx sls deploy",
     "undeploy:dev": "npx sls remove",
     "build": "yarn download-infra:dev && npx sls webpack",
-    "build:ci": "BUILD_MODE=CI npx sls webpack"
+    "build:ci": "webpack --config ./build/webpack.base.config.js"
   },
   "devDependencies": {
     "@babel/core": "7.14.0",
